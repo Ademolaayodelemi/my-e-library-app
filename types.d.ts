@@ -9,8 +9,8 @@ interface Book {
   description: string;
   cover_color: string;
   cover_image_url: string;
-  videoUrl: string;
   summary: string;
+  videoUrl: string;
   isLoanedBook: boolean;
   createdAt: Date | null;
 }

@@ -9,7 +9,7 @@ const Home = async () => {
     `SELECT * FROM users`
   );
    
-   console.log("rows.........................", rows);
+  //  console.log("rows.........................", rows);
 
   return (
     <>

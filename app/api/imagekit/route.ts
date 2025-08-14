@@ -3,6 +3,7 @@ import ImageKit from 'imagekit';
 
 import { NextResponse } from "next/server";
 
+// console.log("Testing in the imagekit api route....................")
 
 // here we destructure for cleaner and more readable code.
 const { env: {imagekit: {publicKey, privateKey, urlEndpoint}} } = config;

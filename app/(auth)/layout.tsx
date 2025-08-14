@@ -1,12 +1,13 @@
 import { ReactNode } from "react";
 import Image from "next/image";
-// import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+import { auth } from "@/authConfig";
 
 const Layout = async ({ children }: { children: ReactNode }) => {
-  // const session = await auth();
 
-  // if (session) redirect("/");
+  const session = await auth();
+  // This will prevent navigating to the sign-in page when user has already signed in(i.e active session)
+  if (session) redirect("/"); // if true, redirection(to home page) will happen preventing below from execution
 
   return (
     <main className="auth-container">
@@ -31,6 +32,7 @@ const Layout = async ({ children }: { children: ReactNode }) => {
           className="size-full object-cover"
         />
       </section>
+      
     </main>
   );
 };

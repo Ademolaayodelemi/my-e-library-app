@@ -15,7 +15,7 @@ const { env: { imagekit: { publicKey, urlEndpoint }} } = config;
 const authenticator = async () => {
 
   try {
-    const response = await fetch(`${config.env.apiEndpoint}/api/auth/imagekit`);
+    const response = await fetch(`${config.env.apiEndpoint}/api/imagekit`);
     
     if (!response.ok) {
       const errorText = await response.text();
@@ -74,7 +74,7 @@ const FileUpload = ({
   const onError = (error: any) => {
     console.log(error);
     toast(
-     `${type} upload failed. Your ${type} could not be uploaded. Please try again.`,
+     `${type} upload failed. Your ${type} could not be uploaded. Please try again......`,
     )
   }
 
