@@ -1,7 +1,7 @@
 import { serve } from "@upstash/workflow/nextjs"; // Helper to define serverless workflow endpoints
-import { db } from "@/database/drizzle"; // Database instance using Drizzle ORM
-import { users } from "@/database/schema"; // Database schema for users table
-import { eq } from "drizzle-orm"; // Equality condition helper for queries
+// import { db } from "@/database/drizzle"; // Database instance using Drizzle ORM
+// import { users } from "@/database/schema"; // Database schema for users table
+// import { eq } from "drizzle-orm"; // Equality condition helper for queries
 import { sendEmail } from "@/lib/workflow"; // Custom function to send emails
 
 // Define possible user activity states
