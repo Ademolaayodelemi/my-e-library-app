@@ -1,8 +1,6 @@
 import { serve } from "@upstash/workflow/nextjs"; // Helper to define serverless workflow endpoints
-// import { db } from "@/database/drizzle"; // Database instance using Drizzle ORM
-// import { users } from "@/database/schema"; // Database schema for users table
-// import { eq } from "drizzle-orm"; // Equality condition helper for queries
 import { sendEmail } from "@/lib/workflow"; // Custom function to send emails
+import poolDB from "@/database/db";
 
 // Define possible user activity states
 type UserState = "non-active" | "active";
@@ -23,23 +21,24 @@ const THIRTY_DAYS_IN_MS = 30 * ONE_DAY_IN_MS;
  * @param email - The user's email address
  * @returns "active" or "non-active" based on time since last activity
  */
-const getUserState = async (email: string): Promise<UserState> => {
+const getUserState = async (email: string): Promise<UserState> => { // Because this function is marked as "async", its return type should be wrapped in a Promise<UserState>
   // Fetch user record by email
-  const user = await db
-    .select()
-    .from(users)
-    .where(eq(users.email, email))
-    .limit(1);
+    const {rows: [user]} = await poolDB.query(
+      `SELECT * FROM users WHERE email = $1 LIMIT 1`,
+      [email]
+    )
 
   // If user doesn't exist in the DB, mark as non-active
   if (user.length === 0) return "non-active";
 
   // Compare current date with last activity date
-  const lastActivityDate = new Date(user[0].lastActivityDate!);
+  const lastActivityDate = new Date(user.lastActivityDate!);
   const now = new Date();
   const timeDifference = now.getTime() - lastActivityDate.getTime();
 
-  // User is considered "non-active" if last activity was between 3 and 30 days ago
+  // User is considered "non-active" if last activity was between 3 days, but not more than 30 days
+  // This creates a middle range of inactivity that qualifies as "non-active".
+  // Anything over 30 days is probably treated differently
   if (
     timeDifference > THREE_DAYS_IN_MS &&
     timeDifference <= THIRTY_DAYS_IN_MS
@@ -59,23 +58,23 @@ const getUserState = async (email: string): Promise<UserState> => {
  * 3. Sending follow-up emails based on activity state
  * 4. Repeating the check every month
  */
-export const { POST } = serve<InitialData>(async (context) => {
+export const { POST } = serve<InitialData>( async (context) => {
   const { email, fullName } = context.requestPayload;
-
   // Step 1: Send initial welcome email
   await context.run("new-signup", async () => {
     await sendEmail({
       email,
-      subject: "Welcome to the platform",
+      subject: "Welcome to the Bookish E-Library platform",
       message: `Welcome ${fullName}!`,
     });
   });
-
+  
   // Step 2: Wait 3 days before checking activity
   await context.sleep("wait-for-3-days", 60 * 60 * 24 * 3);
-
+  
   // Step 3: Continuous activity monitoring loop
   while (true) {
+    console.log("testing inside onboarding................................................")
     // Fetch current user state
     const state = await context.run("check-user-state", async () => {
       return await getUserState(email);

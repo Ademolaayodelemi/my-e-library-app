@@ -5,7 +5,7 @@ import { signIn } from "@/authConfig"
 import { headers } from "next/headers"
 import ratelimit from "@/lib/ratelimit"
 import { redirect } from "next/navigation"
-// import { workflowClient } from "@/lib/workflow";
+import { workflowClient } from "@/lib/workflow";
 import config from "@/lib/config"
 import poolDB from "@/database/db"
 
@@ -58,13 +58,13 @@ export const signUp = async (params: AuthCredentials) => {
       [fullName, email, universityId, hashedPassword, universityCard]
     )
 
-    // await workflowClient.trigger({
-    //   url: `${config.env.prodApiEndpoint}/api/workflows/onboarding`,
-    //   body: {
-    //     email,
-    //     fullName,
-    //   },
-    // });
+    await workflowClient.trigger({
+      url: `${config.env.prodApiEndpoint}/api/workflows/onboarding`,
+      body: {
+        email,
+        fullName,
+      },
+    });
 
     // Here we automacally sign the new user in after a successful registration.
     await signInWithCredentials({ email, password })
