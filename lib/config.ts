@@ -4,7 +4,7 @@ const config = {
     apiEndpoint: process.env.NEXT_PUBLIC_API_ENDPOINT!,
     prodApiEndpoint: process.env.NEXT_PUBLIC_PROD_API_ENDPOINT!, //only accessible in production
     localDatabaseUrl: process.env.LOCAL_DATABASE_URL!,
-    NeonCloudDatabaseUrl: process.env.NEON_CLOUD_DATABASE_URL!,
+    NeonCloudDatabaseUrl: process.env.DATABASE_URL!,
     
     imagekit: {
       publicKey: process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY!,
