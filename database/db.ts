@@ -1,9 +1,15 @@
 import config from "@/lib/config";
 import { Pool } from "pg"
 
-const {env: { databaseUrl }}  = config;
+// const {env: { localDatabaseUrl }}  = config;
+// const poolDB = new Pool({
+//   connectionString: localDatabaseUrl
+// });
+const {env: { cloudDatabaseUrl }}  = config;
 const poolDB = new Pool({
-  connectionString: databaseUrl
+  // connectionString: localDatabaseUrl, Local DB
+  connectionString: cloudDatabaseUrl, //Neon(cloud) DB
+  ssl: { rejectUnauthorized: false }, // required for Neon
 });
 
 export default poolDB;

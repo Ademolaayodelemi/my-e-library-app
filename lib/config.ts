@@ -3,7 +3,8 @@ const config = {
     
     apiEndpoint: process.env.NEXT_PUBLIC_API_ENDPOINT!,
     prodApiEndpoint: process.env.NEXT_PUBLIC_PROD_API_ENDPOINT!, //only accessible in production
-    databaseUrl: process.env.DATABASE_URL!,
+    localDatabaseUrl: process.env.LOCAL_DATABASE_URL!,
+    cloudDatabaseUrl: process.env.CLOUD_DATABASE_URL!,
     
     imagekit: {
       publicKey: process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY!,
