@@ -5,10 +5,10 @@ import { Pool } from "pg"
 // const poolDB = new Pool({
 //   connectionString: localDatabaseUrl
 // });
-const {env: { cloudDatabaseUrl }}  = config;
+const {env: { NeonloudDatabaseUrl }}  = config;
 const poolDB = new Pool({
   // connectionString: localDatabaseUrl, Local DB
-  connectionString: cloudDatabaseUrl, //Neon(cloud) DB
+  connectionString: NeonloudDatabaseUrl, //Neon(cloud) DB
   ssl: { rejectUnauthorized: false }, // required for Neon
 });
 
