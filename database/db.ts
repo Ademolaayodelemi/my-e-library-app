@@ -1,14 +1,16 @@
-import config from "@/lib/config";
+// import config from "@/lib/config";
 import { Pool } from "pg"
 
 // const {env: { localDatabaseUrl }}  = config;
 // const poolDB = new Pool({
 //   connectionString: localDatabaseUrl
 // });
-const {env: { NeonloudDatabaseUrl }}  = config;
+// const {env: { NeonCloudDatabaseUrl }}  = config;
 const poolDB = new Pool({
   // connectionString: localDatabaseUrl, Local DB
-  connectionString: NeonloudDatabaseUrl, //Neon(cloud) DB
+  // connectionString: NeonCloudDatabaseUrl, //Neon(cloud) DB
+  connectionString: process.env.NEON_CLOUD_DATABASE_URL,
+
   ssl: { rejectUnauthorized: false }, // required for Neon
 });
 
