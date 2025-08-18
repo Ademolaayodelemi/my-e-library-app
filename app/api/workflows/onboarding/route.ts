@@ -58,6 +58,7 @@ const getUserState = async (email: string): Promise<UserState> => { // Because t
  * 3. Sending follow-up emails based on activity state
  * 4. Repeating the check every month
  */
+console.log("testing inside onboarding................................................1")
 export const { POST } = serve<InitialData>( async (context) => {
   const { email, fullName } = context.requestPayload;
   // Step 1: Send initial welcome email
@@ -74,7 +75,7 @@ export const { POST } = serve<InitialData>( async (context) => {
   
   // Step 3: Continuous activity monitoring loop
   while (true) {
-    console.log("testing inside onboarding................................................")
+    console.log("testing inside onboarding................................................2")
     // Fetch current user state
     const state = await context.run("check-user-state", async () => {
       return await getUserState(email);

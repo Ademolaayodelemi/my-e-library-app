@@ -58,13 +58,14 @@ export const signUp = async (params: AuthCredentials) => {
       [fullName, email, universityId, hashedPassword, universityCard]
     )
 
-    // await workflowClient.trigger({
-    //   url: `${config.env.prodApiEndpoint}/api/workflows/onboarding`,
-    //   body: {
-    //     email,
-    //     fullName,
-    //   },
-    // });
+    await workflowClient.trigger({
+      // url: `${config.env.prodApiEndpoint}/api/workflows/onboarding`,
+      url: `${config.env.apiEndpoint}/api/workflows/onboarding`,
+      body: {
+        email,
+        fullName,
+      },
+    });
 
     // Here we automacally sign the new user in after a successful registration.
     await signInWithCredentials({ email, password })
