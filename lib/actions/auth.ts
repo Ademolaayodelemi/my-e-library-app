@@ -59,13 +59,22 @@ export const signUp = async (params: AuthCredentials) => {
     )
 
     await workflowClient.trigger({
-      // url: `${config.env.prodApiEndpoint}/api/workflows/onboarding`,
-      url: `${config.env.apiEndpoint}/api/workflows/onboarding`,
+      url: `${config.env.prodApiEndpoint}/api/workflows/onboarding`,
+      // url: `${config.env.apiEndpoint}/api/workflows/onboarding`,
       body: {
         email,
         fullName,
       },
     });
+
+
+//     await fetch(`${config.env.apiEndpoint}/api/workflows/onboarding`, {
+//     method: "POST",
+//     body: JSON.stringify({ "foo": "bar" }),
+//     headers: {
+//     "my-header": "foo"
+//   }
+// });
 
     // Here we automacally sign the new user in after a successful registration.
     await signInWithCredentials({ email, password })
@@ -122,3 +131,5 @@ So in plain English: "Figure out whoâ€™s making the request, then check if theyâ
 
 
 */
+
+
