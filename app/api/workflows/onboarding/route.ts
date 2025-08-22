@@ -1,5 +1,5 @@
 import { serve } from "@upstash/workflow/nextjs"; // Helper to define serverless workflow endpoints
-import { sendEmail } from "@/lib/workflow"; // Custom function to send emails
+import { mySendEmail } from "@/lib/workflow"; // Custom function to send emails
 import poolDB from "@/database/db";
 
 // Define possible user activity states
@@ -35,7 +35,6 @@ const getUserState = async (email: string): Promise<UserState> => { // Because t
   const last_activity_date = new Date(user.last_activity_date!);
   const now = new Date();
   const timeDifference = now.getTime() - last_activity_date.getTime();
-  console.log("testing inside onboarding................................................AAAAAAAAA", user)
   
   // User is considered "non-active" if last activity was between 3 days, but not more than 30 days
   // This creates a middle range of inactivity that qualifies as "non-active".
@@ -51,7 +50,6 @@ const getUserState = async (email: string): Promise<UserState> => { // Because t
   return "active";
 };
 // getUserState('ademolaayodelemi@gmail.com');
-console.log("testing inside onboarding................................................BB")
 
 /**
  * POST handler for the workflow
@@ -61,37 +59,31 @@ console.log("testing inside onboarding..........................................
  * 3. Sending follow-up emails based on activity state
  * 4. Repeating the check every month
  */
-console.log("testing inside onboarding................................................111111")
 export const { POST } = serve<InitialData>( async (context) => {
-  console.log("testing inside onboarding................................................2A", context.run)
   const { email, fullName } = context.requestPayload;
-  console.log("testing inside onboarding................................................2B", email, fullName)
   // Step 1: Send initial welcome email
   await context.run("new-signup", async () => {
-    console.log("testing inside onboarding................................................2C")
-    await sendEmail({
+    await mySendEmail({
       email,
       subject: "Welcome to the Bookish E-Library platform",
       message: `Welcome ${fullName}!`,
     });
   });
-  console.log("testing inside onboarding................................................2D")
   
   // Step 2: Wait 3 days before checking activity
   await context.sleep("wait-for-3-days", 60 * 60 * 24 * 3);
   
   // Step 3: Continuous activity monitoring loop
   while (true) {
-    console.log("testing inside onboarding................................................3")
-    // Fetch current user state
+    // check current "user" state
     const state = await context.run("check-user-state", async () => {
       return await getUserState(email);
     });
-
+    
     // Step 4: Send tailored follow-up email based on activity
     if (state === "non-active") {
       await context.run("send-email-non-active", async () => {
-        await sendEmail({
+        await mySendEmail({
           email,
           subject: "Are you still there?",
           message: `Hey ${fullName}, we miss you!`,
@@ -99,14 +91,14 @@ export const { POST } = serve<InitialData>( async (context) => {
       });
     } else if (state === "active") {
       await context.run("send-email-active", async () => {
-        await sendEmail({
+        await mySendEmail({
           email,
           subject: "Welcome back!",
           message: `Welcome back ${fullName}!`,
         });
       });
     }
-
+    
     // Step 5: Wait 1 month before checking again
     await context.sleep("wait-for-1-month", 60 * 60 * 24 * 30);
   }

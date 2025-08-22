@@ -11,11 +11,10 @@ const layout = async ({children}: {children: ReactNode}) => {
   // This will prevent navigating to the home page when user has not signed in(i.e no active session)
   if (!session) redirect("/sign-in"); // if false, redirection(to sign-in page) will happen preventing below from execution
 
+  // This "after()" ensures that it doesn't block the UI.
   after(async () => {
   // No need to check `!session?.user?.id` here —
   // earlier redirect already ensures only authenticated users reach this code.
-
-  
   // 1. Fetch the current user record from the database
   const { rows: [user] } = await poolDB.query(
     `SELECT * FROM users WHERE id = $1 LIMIT 1`,

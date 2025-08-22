@@ -66,16 +66,6 @@ export const signUp = async (params: AuthCredentials) => {
         fullName,
       },
     });
-
-
-//     await fetch(`${config.env.apiEndpoint}/api/workflows/onboarding`, {
-//     method: "POST",
-//     body: JSON.stringify({ "foo": "bar" }),
-//     headers: {
-//     "my-header": "foo"
-//   }
-// });
-
     // Here we automacally sign the new user in after a successful registration.
     await signInWithCredentials({ email, password })
 
