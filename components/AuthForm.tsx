@@ -62,7 +62,7 @@ const AuthForm = <T extends FieldValues>({ type, schema, defaultValues, onSubmit
 
       router.push("/");
     } else {
-      toast.error(`Error ${isSignIn ? "signing in" : "signing up"}`, { // or "toast.success()" for success
+      toast.error(`Error ${isSignIn ? "signing in" : "signing up"}`, { //  // there is also "toast.success()" for success
         description: result.error ?? "An error occurred.",
       });
     }
@@ -98,9 +98,9 @@ const AuthForm = <T extends FieldValues>({ type, schema, defaultValues, onSubmit
                     {field.name === "universityCard" ? (
                       <FileUpload
                         type="image"
-                        accept="image/*"
+                        accept="image/*" // "image/*" means accept all kind of image type.
                         placeholder="Upload your ID"
-                        folder="ids"
+                        folder="ids" // it be create and subsequently store all images a folder called "ids" on imakeKit platform
                         variant="dark"
                         onFileChange={field.onChange}
                       />

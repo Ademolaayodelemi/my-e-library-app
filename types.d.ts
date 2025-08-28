@@ -8,11 +8,11 @@ interface Book {
   available_copies: number;
   description: string;
   cover_color: string;
-  cover_image_url: string;
+  cover_url: string;
   summary: string;
-  videoUrl: string;
+  video_url: string;
   isLoanedBook: boolean;
-  createdAt: Date | null;
+  created_at: Date | null;
 }
 
 interface AuthCredentials {
@@ -31,8 +31,8 @@ interface BookParams {
   cover_url: string;
   cover_color: string;
   description: string;
-  totalCopies: number;
-  videoUrl: string;
+  total_copies: number;
+  video_url: string;
   summary: string;
 }
 

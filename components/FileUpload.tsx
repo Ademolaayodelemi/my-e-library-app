@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import config from "@/lib/config";
-import { IKContext, IKImage, IKUpload } from 'imagekitio-react';
+import { IKContext, IKImage, IKVideo, IKUpload } from 'imagekitio-react';
 import { toast } from "sonner"
 
 // import { cidrv4 } from "zod";
@@ -42,19 +42,11 @@ interface Props {
   placeholder: string;
   folder: string;
   variant: "dark" | "light";
-  onFileChange: (filePath: string) => void;
   value?: string;
+  onFileChange: (filePath: string) => void;
 }
 
-const FileUpload = ({
-  type,
-  accept,
-  placeholder,
-  folder,
-  variant,
-  onFileChange,
-  value,
-}: Props) => {
+const FileUpload = ({ type, accept, placeholder, folder, variant, onFileChange, value }: Props) => {
 
   const ikUploadRef = useRef<HTMLInputElement>(null);
 
@@ -67,7 +59,8 @@ const FileUpload = ({
   const [progress, setProgress] = useState(0);
 
   const styles = {
-    button: variant === "dark" ? "bg-dark-300" : "bg-light-600 border-gray-100 border",
+    // if "dark" it means we are showing this component on the public UI page (not admin page). so we style accordingly
+    button: variant === "dark" ? "bg-dark-300" : "bg-light-600 border-gray-100 border", 
     placeholder: variant === "dark" ? "text-light-100" : "text-slate-500",
     text: variant === "dark" ? "text-light-100" : "text-dark-400", 
   }
@@ -161,15 +154,30 @@ const FileUpload = ({
         <p className={cn("text-base", styles.placeholder)}>{placeholder}</p>
         {file && ( <p className={cn("upload-filename", styles.text)}>{file.filePath}</p> )}
       </button>
-      {file.filePath && (
-        <IKImage
-        alt={file.filePath}
-        path={file.filePath}
-        width={500}
-        height={300}
-        />
-      )
-      }
+
+      {progress > 0 && progress !== 100 && (
+      <div className="w-full rounded-full bg-green-100">
+        <div className="progress" style={{ width: `${progress}%` }}>
+          {progress}%
+        </div>
+      </div>
+      )}
+
+      {file.filePath &&
+        (type === "image" ? (
+          <IKImage
+            alt={file.filePath}
+            path={file.filePath}
+            width={500}
+            height={300}
+          />
+        ) : type === "video" ? (
+          <IKVideo
+            path={file.filePath}
+            controls={true}
+            className="h-96 w-full rounded-xl"
+          />
+        ) : null)} {/* null if neither image nor video */}
     </IKContext>
   );
 }
