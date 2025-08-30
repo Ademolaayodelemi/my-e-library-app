@@ -7,7 +7,7 @@ interface Props {
 }
 
 const BookList = ({ title, books, additionalClassName }: Props) => {
-  if (books.length < 2) return;
+  if (books.length < 2) return; //if "books.length" is just 1 return, bcos the first element will be used as the latest book and not the list
   return (
     <section className={additionalClassName}>
       <h2 className="font-bebas-neue text-4xl text-light-100">{title}</h2>

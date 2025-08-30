@@ -3,11 +3,12 @@ import { Pool } from "pg"
 
 // const {env: { localDatabaseUrl }}  = config;
 // const poolDB = new Pool({
-//   connectionString: localDatabaseUrl
-// });
+  //   connectionString: localDatabaseUrl
+  // });
+  
 const {env: { NeonCloudDatabaseUrl }}  = config;
 const poolDB = new Pool({
-  // connectionString: localDatabaseUrl, Local DB
+  // connectionString: localDatabaseUrl, // Local DB
   connectionString: NeonCloudDatabaseUrl, //Neon(cloud) DB
   ssl: { rejectUnauthorized: false }, // required for Neon
 });

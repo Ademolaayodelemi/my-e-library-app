@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Header = () => {
+const Header = ({ videoUrl }: {videoUrl: string}) => {
   return (
     <div>Header</div>
   )

@@ -1,10 +1,11 @@
-// "use client";
+"use client";
 
 import { cn } from "@/lib/utils";
 import BookCoverSvg from "@/components/BookCoverSvg";
-// import { IKImage } from "imagekitio-next";
-// import config from "@/lib/config";
-import Image from "next/image";
+import { IKImage } from 'imagekitio-react'; // to use this, it is important to add "use client" at the top to avoid error
+
+import config from "@/lib/config";
+// import Image from "next/image";
 
 type BookCoverVariant = "extraSmall" | "small" | "medium" | "regular" | "wide"; //This is a union type of allowed variant names.
 // This is saying the keys in "BookCoverVariant" must be "extraSmall", "small", "medium", "regular" and "wide" and the values must be "string" <BookCoverVariant, string>
@@ -21,30 +22,30 @@ interface Props {
   className?: string;
   variant?: BookCoverVariant; // "BookCoverVariant" can also be used directly as a type NOT ONLY as keys (as used above)
   coverColor: string;
-  coverImage: string;
+  coverImageUrl: string;
 }
 
-const BookCover = ({ className, variant = "regular", coverColor = "#012B48", coverImage = "https://placehold.co/400x600.png" }: Props) => {
+const BookCover = ({ className, variant = "regular", coverColor = "#012B48", coverImageUrl = "https://placehold.co/400x600.png" }: Props) => {
 //"regular" is the default value of "variant" 
   return (
     <div className={cn( "relative transition-all duration-300", variantStyles[variant], className )}>
       <BookCoverSvg coverColor={coverColor} />
       <div className="absolute z-10" style={{ left: "12%", width: "87.5%", height: "88%" }}>
-        {/* <IKImage
-          path={coverImage}
+        <IKImage
+          path={coverImageUrl}
           urlEndpoint={config.env.imagekit.urlEndpoint}
           alt="Book cover"
           fill
           className="rounded-sm object-fill"
           loading="lazy"
-          lqip={{ active: true }}
-        /> */}
-        <Image
-            src={coverImage}
+          lqip={{ active: true }} // Lower Quality Image Placeholder (lqip)
+        />
+        {/* <Image
+            src={coverImageUrl}
             alt="Book cover"
             fill
             className="rounded-sm object-fill"
-        />
+        /> */}
       </div>
     </div>
   );

@@ -20,7 +20,7 @@ export const bookSchema = z.object({
   genre: z.string().trim().min(2).max(50),
   rating: z.coerce.number().min(1).max(5),// In Zod, z.coerce.number() is used to automatically convert (coerce) input values into a number—even if they come in as strings.
   total_copies: z.coerce.number().int().positive().lte(10000),
-  cover_url: z.string().nonempty(),
+  cover_image_url: z.string().nonempty(),
   video_url: z.string().nonempty(),
   summary: z.string().trim().min(10),
   cover_color: z.string().trim().regex(/^#[0-9A-F]{6}$/i), // see explanation below

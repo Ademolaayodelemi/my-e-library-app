@@ -25,13 +25,11 @@ const layout = async ({children}: {children: ReactNode}) => {
   // slice(0, 10) extract "2025-08-15" from "2025-08-15T16:20:45.123Z"
   const today = new Date().toISOString().slice(0, 10); 
   const userLastActivity = user.last_activity_date.toISOString().slice(0, 10)
-  // console.log("trigger................................1", user)
   
   // 3. If the last activity date is already today, skip the update
   if (userLastActivity === today) {
     return; // Nothing to update
   }
-  console.log("trigger................................1", user)
   // 4. Otherwise, update last_activity_date to today's date
   await poolDB.query(
     `UPDATE users

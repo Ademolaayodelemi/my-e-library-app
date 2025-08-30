@@ -8,7 +8,7 @@ interface Book {
   available_copies: number;
   description: string;
   cover_color: string;
-  cover_url: string;
+  cover_image_url: string;
   summary: string;
   video_url: string;
   isLoanedBook: boolean;
@@ -28,7 +28,7 @@ interface BookParams {
   author: string;
   genre: string;
   rating: number;
-  cover_url: string;
+  cover_image_url: string;
   cover_color: string;
   description: string;
   total_copies: number;

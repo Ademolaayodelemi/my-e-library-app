@@ -33,7 +33,7 @@ const BookForm = ({ type, ...book }: Props) => {
       genre: "",
       rating: 1,
       total_copies: 1,
-      cover_url: "",
+      cover_image_url: "",
       cover_color: "",
       video_url: "",
       summary: "",
@@ -170,7 +170,7 @@ const BookForm = ({ type, ...book }: Props) => {
 
         <FormField
           control={form.control}
-          name={"cover_url"}
+          name={"cover_image_url"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
               <FormLabel className="text-base font-normal text-dark-500">
