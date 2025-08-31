@@ -1,9 +1,15 @@
-import React from 'react'
+"use client";
+import React from "react";
+import { IKVideo, IKContext } from "imagekitio-react";
+import config from "@/lib/config";
 
-const Header = ({ videoUrl }: {videoUrl: string}) => {
+const BookVideo = ({ videoUrl }: { videoUrl: string }) => {
   return (
-    <div>Header</div>
-  )
-}
+    <IKContext publicKey={config.env.imagekit.publicKey} urlEndpoint={config.env.imagekit.urlEndpoint} >
 
-export default Header
+      <IKVideo path={videoUrl} controls={true} className="w-full rounded-xl" />
+      
+    </IKContext>
+  );
+};
+export default BookVideo;

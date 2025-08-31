@@ -40,7 +40,7 @@ const Page = async ({ params }: { params: Promise<{ bookId: string }> }) => {
 
         </div>
 
-        {/*  SIMILAR*/}
+        {/*  SIMILAR BOOKS*/}
       </div>
     </>
   );

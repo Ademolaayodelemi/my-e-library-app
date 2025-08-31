@@ -8,6 +8,8 @@ import { redirect } from "next/navigation"
 import { workflowClient } from "@/lib/workflow";
 import config from "@/lib/config"
 import poolDB from "@/database/db"
+import { signOut } from "@/authConfig";
+
 
 // Sign in User
 export const signInWithCredentials = async ( params: Pick<AuthCredentials, "email" | "password">) => {
@@ -75,6 +77,13 @@ export const signUp = async (params: AuthCredentials) => {
     return { success: false, error: "Signup error" }
   }
 }
+
+
+
+export async function signOutAction() {
+  await signOut();
+}
+
 
 /*
 "const result = await signIn("credentials", { email, password, redirect: false })"

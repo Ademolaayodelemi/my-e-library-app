@@ -2,17 +2,13 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import BookList from "@/components/BookList";
 import { sampleBooks } from "@/constants";
-import { signOut } from "@/authConfig";
+import { signOutAction } from "@/lib/actions/auth";
 
-const page = () => {
+const Page = () => {
   return (
     <>
       <form
-        action={async () => {
-          "use server";
-
-          await signOut();
-        }}
+        action={signOutAction}
         className="mb-10"
       >
         <Button>Logout</Button>
@@ -21,6 +17,6 @@ const page = () => {
       <BookList title="Borrowed Books" books={sampleBooks} />
     </>
   );
-}
+};
+export default Page;
 
-export default page;

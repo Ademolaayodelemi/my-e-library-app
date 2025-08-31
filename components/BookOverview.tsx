@@ -1,27 +1,27 @@
 import React from "react";
 import Image from "next/image";
 import BookCover from "@/components/BookCover";
-// import BorrowBook from "@/components/BorrowBook";
-// import { db } from "@/database/drizzle";
-// import { users } from "@/database/schema";
-// import { eq } from "drizzle-orm";
+import poolDB from "@/database/db";
+import BorrowBook from "@/components/BorrowBook";
+
 
 interface Props extends Book {
   userId: string;
 }
-const BookOverview = async ({
-  // id,
-  // userId,
-  title,
-  author,
-  genre,
-  rating,
-  cover_image_url,
-  cover_color,
-  description,
-  total_copies,
-  available_copies,
-}: Props) => {
+const BookOverview = async ({ id, userId, title, author, genre, rating, cover_image_url, cover_color, description, total_copies, available_copies }: Props) => {
+
+  const { rows: [user] } = await poolDB.query(
+  `SELECT *
+   FROM users
+   WHERE id = $1
+   LIMIT 1`,
+  [userId]
+);
+
+  const borrowingEligibility = {
+    isEligible: available_copies > 0 && user?.status === "APPROVED",
+    message: available_copies <= 0 ? "Book is not available" : "You are not eligible to borrow this book",
+  }
 
   return (
     <section className="book-overview">
@@ -45,13 +45,13 @@ const BookOverview = async ({
 
         <p className="book-description">{description}</p>
 
-        {/* {user && (
+        {user && (
           <BorrowBook
             bookId={id}
             userId={userId}
             borrowingEligibility={borrowingEligibility}
           />
-        )} */}
+        )}
       </div>
 
 

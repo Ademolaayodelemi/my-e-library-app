@@ -36,24 +36,4 @@ export default Home;
 
 
 
-// const Home = async () => {
-//  const session = await auth();
-//   const { rows }  = await poolDB.query(
-//     `SELECT * FROM users`
-//   );
-   
-//   //  console.log("rows.........................", rows);
 
-//   return (
-//     <>
-//     <BookOverview {...sampleBooks[0]}/>
-//     <BookList 
-//       title="Latest Books"
-//       books={sampleBooks}
-//       additionalClassName="mt-28"
-//     />
-//     </>
-//   );
-// }
-
-// export default Home;
